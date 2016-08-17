@@ -1,5 +1,6 @@
 package hu.adamsan.utilities.filecomparer;
 
+import java.awt.event.ActionEvent;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.List;
@@ -48,9 +49,23 @@ public class App {
         chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         if (previousFile != null) {
             chooser.setSelectedFile(previousFile);
+            removePreviousSelectionIfCancelPressed(chooser);
         }
         chooser.showOpenDialog(null);
-        return chooser.getSelectedFile();
+        File selectedFile = chooser.getSelectedFile();
+        return selectedFile;
+    }
+
+    private void removePreviousSelectionIfCancelPressed(JFileChooser chooser) {
+        chooser.addActionListener((ActionEvent e) -> {
+            if (isCancelPressed(e)) {
+                chooser.setSelectedFile(null);
+            }
+        });
+    }
+
+    private boolean isCancelPressed(ActionEvent e) {
+        return e.getActionCommand().equals(JFileChooser.CANCEL_SELECTION);
     }
 
     private void displayDifference(List<Path> difference) {
