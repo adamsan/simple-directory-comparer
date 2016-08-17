@@ -1,4 +1,4 @@
-package hu.adamsan.utilities.filecomperer;
+package hu.adamsan.utilities.filecomparer;
 
 import java.io.IOException;
 import java.nio.file.Files;

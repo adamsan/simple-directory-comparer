@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import hu.adamsan.utilities.filecomparer.DirectoryComparator;
+
 public class DirectoryComparatorTest {
 
     private static final String RESOURCE_PATH = "./src/test/resources/";

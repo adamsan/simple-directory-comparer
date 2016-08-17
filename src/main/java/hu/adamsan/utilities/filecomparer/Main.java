@@ -1,4 +1,4 @@
-package hu.adamsan.utilities.filecomperer;
+package hu.adamsan.utilities.filecomparer;
 
 import java.io.File;
 import java.io.FileInputStream;
