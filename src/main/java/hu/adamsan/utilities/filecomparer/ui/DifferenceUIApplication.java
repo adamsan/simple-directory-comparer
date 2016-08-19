@@ -109,9 +109,7 @@ public class DifferenceUIApplication extends Application {
         List<Pair<File>> selections = searchPersistence.loadpreviousSelections();
         VBox vBox = differenceController.historyVBox;
         for (Pair<File> selection : selections) {
-            HistoryControl control = new HistoryControl();
-            control.first.setText(selection.first.toString());
-            control.second.setText(selection.second.toString());
+            HistoryControl control = new HistoryControl(selection);
             control.setSearchPersistence(searchPersistence);
             vBox.getChildren().add(control);
         }

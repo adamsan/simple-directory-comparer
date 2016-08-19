@@ -30,7 +30,7 @@ public class DifferenceController {
     @FXML
     Button changeFirstBtn;
     @FXML
-    Button changeSecond;
+    Button changeSecondBtn;
     @FXML
     Button compareBtn;
 
