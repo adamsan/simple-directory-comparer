@@ -10,20 +10,15 @@ import hu.adamsan.utilities.filecomparer.DirectoryComparator;
 import hu.adamsan.utilities.filecomparer.Pair;
 import hu.adamsan.utilities.filecomparer.SearchPersistence;
 import javafx.application.Application;
-import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
 public class DifferenceUIApplication extends Application {
     private BorderPane root;
@@ -103,46 +98,24 @@ public class DifferenceUIApplication extends Application {
         scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 
         loadHistory();
+        differenceController.historyPane.setExpanded(false);
     }
 
-    private void loadHistory() {
+    public void loadHistory() {
         List<Pair<File>> selections = searchPersistence.loadpreviousSelections();
         VBox vBox = differenceController.historyVBox;
+        vBox.getChildren().clear();
         for (Pair<File> selection : selections) {
             HistoryControl control = new HistoryControl(selection);
+            control.setDifferenceUIApplication(this);
             control.setSearchPersistence(searchPersistence);
             vBox.getChildren().add(control);
         }
-        differenceController.historyPane.setExpanded(false);
 
     }
 
     private FXMLLoader createLoaderFor(String rootFxmlFileName) {
         return new FXMLLoader(getClass().getResource(rootFxmlFileName));
-    }
-
-    private Callback<CellDataFeatures<String, String>, ObservableValue<String>> differenceCellValueFactory() {
-        return new Callback<TableColumn.CellDataFeatures<String, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(CellDataFeatures<String, String> param) {
-                ObservableValue<String> ov;
-                return new ReadOnlyStringWrapper("Faszom mostmár");
-            }
-        };
-    }
-
-    private Callback<TableColumn<String, String>, TableCell<String, String>> differenceCellFactory() {
-        return new Callback<TableColumn<String, String>, TableCell<String, String>>() {
-            @Override
-            public TableCell<String, String> call(TableColumn<String, String> param) {
-                System.out.println(param);
-                System.out.println(param.getClass());
-                TableCell<String, String> cell = new TableCell<>();
-                cell.setText("MIVANMAR");
-                cell.setVisible(true);
-                return cell;
-            }
-        };
     }
 
     public static void main(String[] args) {
@@ -159,6 +132,7 @@ public class DifferenceUIApplication extends Application {
         List<Path> firstPaths = directoryComparator.firstPaths();
         List<Path> secondPaths = directoryComparator.secondPaths();
         populateTable(toStringList(firstPaths), toStringList(secondPaths), toStringList(difference));
+        loadHistory();
     }
 
     private List<String> toStringList(List<Path> paths) {

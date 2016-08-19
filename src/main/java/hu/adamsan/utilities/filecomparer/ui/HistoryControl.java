@@ -6,12 +6,10 @@ import java.io.IOException;
 import hu.adamsan.utilities.filecomparer.Pair;
 import hu.adamsan.utilities.filecomparer.SearchPersistence;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
 public class HistoryControl extends AnchorPane {
@@ -25,6 +23,7 @@ public class HistoryControl extends AnchorPane {
 
     private SearchPersistence searchPersistence;
     private Pair<File> selection;
+    private DifferenceUIApplication differenceUIApplication;
 
     public HistoryControl(Pair<File> selection) {
         super();
@@ -41,14 +40,6 @@ public class HistoryControl extends AnchorPane {
         second.setText(selection.second.toString());
         this.selection = selection;
 
-        deleteBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                System.out.println("TODO: delete " + selection);
-                
-            }
-        });
-
     }
 
     public void setSearchPersistence(SearchPersistence searchPersistence) {
@@ -56,7 +47,18 @@ public class HistoryControl extends AnchorPane {
     }
 
     @FXML
-    public void delete(MouseEvent e) {
-        System.out.println("Delete pressed!");
+    public void delete(ActionEvent e) {
+        searchPersistence.delete(selection);
+        differenceUIApplication.loadHistory();
     }
+
+    public void setDifferenceUIApplication(DifferenceUIApplication differenceUIApplication) {
+        this.differenceUIApplication = differenceUIApplication;
+    }
+
+    @FXML
+    public void load(ActionEvent e) {
+        differenceUIApplication.compare(selection);
+    }
+
 }

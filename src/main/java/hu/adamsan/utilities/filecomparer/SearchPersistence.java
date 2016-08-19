@@ -34,16 +34,30 @@ public class SearchPersistence {
     public void saveSelection(Pair<File> directoriesToCompare) {
         if (!directoriesToCompare.isNull()) {
             List<Pair<File>> list = loadpreviousSelections();
-            if (list.contains(directoriesToCompare)) {
-                list.remove(directoriesToCompare);
-            }
+            removeDuplicate(directoriesToCompare, list);
             list.add(directoriesToCompare);
-            try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(SERIALIZED_NAME))) {
-                out.writeObject(list);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            saveSelections(list);
         }
+    }
+
+    private void removeDuplicate(Pair<File> directoriesToCompare, List<Pair<File>> list) {
+        while (list.contains(directoriesToCompare)) {
+            list.remove(directoriesToCompare);
+        }
+    }
+
+    private void saveSelections(List<Pair<File>> list) {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(SERIALIZED_NAME))) {
+            out.writeObject(list);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void delete(Pair<File> toDelete) {
+        List<Pair<File>> selections = loadpreviousSelections();
+        selections.remove(toDelete);
+        saveSelections(selections);
     }
 
 }
