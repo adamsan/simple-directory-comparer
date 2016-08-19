@@ -126,6 +126,8 @@ public class DifferenceUIApplication extends Application {
         if (currentPair.isNull()) {
             return;
         }
+        differenceController.setCurrentPair(currentPair);
+
         searchPersistence.saveSelection(currentPair);
         directoryComparator.setDirectories(currentPair.first, currentPair.second);
         List<Path> difference = directoryComparator.calculateDifference();

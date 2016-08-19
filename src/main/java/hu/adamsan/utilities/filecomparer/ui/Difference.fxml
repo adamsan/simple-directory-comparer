@@ -9,15 +9,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.TitledPane?>
 
-<BorderPane onMouseClicked="#mouseClick" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.adamsan.utilities.filecomparer.ui.DifferenceController">
+<BorderPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.adamsan.utilities.filecomparer.ui.DifferenceController">
 
 	<top>
 		<ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER_LEFT">
 			<buttons>
 				<Button fx:id="changeFirstBtn" mnemonicParsing="true" onAction="#changeFirstClick" text="Change _First" ButtonBar.buttonData="LEFT" />
 				<Button fx:id="changeSecondBtn" mnemonicParsing="true" onAction="#changeSecondClick" text="Change _Second" ButtonBar.buttonData="LEFT" />
-				<Button mnemonicParsing="false" text="History" ButtonBar.buttonData="LEFT" />
-				<Button mnemonicParsing="false" text="Clear history" ButtonBar.buttonData="LEFT" />
+				<Button mnemonicParsing="false" text="Copy selected" ButtonBar.buttonData="LEFT" onAction="#copySelected" />
 			</buttons>
 		</ButtonBar>
 	</top>

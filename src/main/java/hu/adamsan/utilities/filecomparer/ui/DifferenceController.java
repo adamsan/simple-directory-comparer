@@ -1,6 +1,9 @@
 package hu.adamsan.utilities.filecomparer.ui;
 
 import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.io.FileUtils;
 
 import hu.adamsan.utilities.filecomparer.Pair;
 import javafx.event.ActionEvent;
@@ -9,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
 
@@ -41,12 +43,8 @@ public class DifferenceController {
     @FXML
     VBox historyVBox;
 
-    @FXML TitledPane historyPane;
-
     @FXML
-    public void mouseClick(MouseEvent event) {
-        System.out.println("Mouse Clicker on application");
-    }
+    TitledPane historyPane;
 
     @FXML
     public void changeFirstClick(ActionEvent event) {
@@ -74,6 +72,36 @@ public class DifferenceController {
         chooser.setInitialDirectory(defaultDir);
         File file = chooser.showDialog(mainUI.primaryStage);
         return file;
+    }
+
+    @FXML
+    public void copySelected(ActionEvent event) {
+        MyCellData selected = differenceTable.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            System.out.println("TODO: Copy selected");
+            String selectedFileString = selected.getName().get();
+            copy(selectedFileString);
+            mainUI.compare(currentPair);
+        }
+
+    }
+
+    private void copy(String selectedFileString) {
+        File source = new File(currentPair.first, selectedFileString);
+        File dest = new File(currentPair.second, selectedFileString);
+        try {
+            if (source.isDirectory()) {
+                FileUtils.copyDirectory(source, dest);
+            } else {
+                FileUtils.copyFile(source, dest);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setCurrentPair(Pair<File> currentPair) {
+        this.currentPair = currentPair;
     }
 
 }
