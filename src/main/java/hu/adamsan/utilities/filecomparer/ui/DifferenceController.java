@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TitledPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.DirectoryChooser;
@@ -20,8 +21,6 @@ public class DifferenceController {
     TableColumn<MyCellData, String> secondColumn;
     @FXML
     TableColumn<MyCellData, String> differenceColumn;
-    @FXML
-    VBox differencesVBox;
     @FXML
     TableView<MyCellData> differenceTable;
     @FXML
@@ -38,6 +37,11 @@ public class DifferenceController {
     DifferenceUIApplication mainUI;
 
     Pair<File> currentPair = new Pair<>();
+
+    @FXML
+    VBox historyVBox;
+
+    @FXML TitledPane historyPane;
 
     @FXML
     public void mouseClick(MouseEvent event) {

@@ -98,9 +98,25 @@ public class DifferenceUIApplication extends Application {
         differenceController = fxmlLoader.getController();
         differenceController.mainUI = this;
         double height = java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 3 * 2;
-        scene = new Scene(root, 700, height);
+        scene = new Scene(root, 900, height);
         primaryStage.setTitle("Difference Viewer");
         scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+
+        loadHistory();
+    }
+
+    private void loadHistory() {
+        List<Pair<File>> selections = searchPersistence.loadpreviousSelections();
+        VBox vBox = differenceController.historyVBox;
+        for (Pair<File> selection : selections) {
+            HistoryControl control = new HistoryControl();
+            control.first.setText(selection.first.toString());
+            control.second.setText(selection.second.toString());
+            control.setSearchPersistence(searchPersistence);
+            vBox.getChildren().add(control);
+        }
+        differenceController.historyPane.setExpanded(false);
+
     }
 
     private FXMLLoader createLoaderFor(String rootFxmlFileName) {
