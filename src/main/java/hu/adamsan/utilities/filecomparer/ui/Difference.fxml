@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane onMouseClicked="#mouseClick" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.adamsan.utilities.filecomparer.ui.DifferenceController">
+	<left>
+		<HBox prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #CFC;" BorderPane.alignment="CENTER">
+			<children>
+				<VBox fx:id="differencesVBox" prefHeight="242.0" prefWidth="200.0" style="-fx-background-color: #FCC;" />
+			</children>
+		</HBox>
+	</left>
+	<center>
+		<HBox>
+			<TableView fx:id="firstTable" prefHeight="368.0" prefWidth="458.0" BorderPane.alignment="CENTER">
+				<columns>
+					<TableColumn fx:id="firstColumn" prefWidth="150.0" text="First" />
+				</columns>
+			</TableView>
+			<TableView fx:id="secondTable" prefHeight="368.0" prefWidth="458.0" BorderPane.alignment="CENTER">
+				<columns>
+					<TableColumn fx:id="secondColumn" prefWidth="150.0" text="Second" />
+				</columns>
+			</TableView>
+			<TableView fx:id="differenceTable" prefHeight="368.0" prefWidth="458.0" BorderPane.alignment="CENTER">
+				<columns>
+					<TableColumn fx:id="differenceColumn" prefWidth="150.0" text="Missing from Second" />
+				</columns>
+			</TableView>
+		</HBox>
+	</center>
+	<top>
+		<ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER_LEFT">
+			<buttons>
+				<Button fx:id="changeFirstBtn" mnemonicParsing="true" onAction="#changeFirstClick" text="Change _First" ButtonBar.buttonData="LEFT" />
+				<Button fx:id="changeSecondBtn" mnemonicParsing="true" onAction="#changeSecondClick" text="Change _Second" ButtonBar.buttonData="LEFT" />
+				<Button mnemonicParsing="false" text="History" ButtonBar.buttonData="LEFT" />
+				<Button mnemonicParsing="false" text="Clear history" ButtonBar.buttonData="LEFT" />
+			</buttons>
+		</ButtonBar>
+	</top>
+</BorderPane>

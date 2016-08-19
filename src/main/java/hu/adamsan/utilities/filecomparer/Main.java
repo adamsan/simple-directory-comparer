@@ -6,6 +6,7 @@ public class Main {
         App program = new App();
         program.setDirectoryComparator(new DirectoryComparator());
         program.setPersistence(new SearchPersistence());
+        program.setDifferenceDisplayer(new DifferenceDisplayer());
         program.start();
     }
 }

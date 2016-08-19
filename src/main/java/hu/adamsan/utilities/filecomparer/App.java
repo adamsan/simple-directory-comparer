@@ -10,6 +10,11 @@ public class App {
 
     private DirectoryComparator directoryComparator;
     private SearchPersistence searchPersistence;
+    private DifferenceDisplayer differenceDisplayer;
+
+    public void setDifferenceDisplayer(DifferenceDisplayer differenceDisplayer) {
+        this.differenceDisplayer = differenceDisplayer;
+    }
 
     public DirectoryComparator getDirectoryComparator() {
         return directoryComparator;
@@ -30,7 +35,7 @@ public class App {
             searchPersistence.saveSelection(dirs);
             directoryComparator.setDirectories(dirs.first.toPath(), dirs.second.toPath());
             List<Path> difference = directoryComparator.calculateDifference();
-            displayDifference(difference);
+            displayDifference(dirs, difference);
         }
     }
 
@@ -60,8 +65,8 @@ public class App {
         return selectedFile;
     }
 
-    private void displayDifference(List<Path> difference) {
-        System.out.println(difference);
+    private void displayDifference(Pair<File> dirs, List<Path> difference) {
+        differenceDisplayer.displayDifference(dirs, difference);
     }
 
 }

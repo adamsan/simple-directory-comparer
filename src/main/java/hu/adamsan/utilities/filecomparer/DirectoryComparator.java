@@ -1,5 +1,6 @@
 package hu.adamsan.utilities.filecomparer;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.LinkOption;
@@ -31,6 +32,21 @@ public class DirectoryComparator {
         }
     }
 
+    public List<Path> firstPaths() {
+        return listLastPartOfDirectories(dirA);
+    }
+
+    public List<Path> secondPaths() {
+        return listLastPartOfDirectories(dirB);
+    }
+    private List<Path> listLastPartOfDirectories(Path dir) {
+        try {
+            return Files.list(dir).map(lastPartOfPath).collect(Collectors.toList());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public List<Path> calculateDifference() {
         if(dirA.equals(dirB)) {
             return Collections.emptyList();
@@ -55,6 +71,10 @@ public class DirectoryComparator {
         return path.subpath(nameCount - 1, nameCount);
     };
 
-    public static class DirectoryNotexistsException extends RuntimeException {}
 
+    public void setDirectories(File first, File second) {
+        setDirectories(first.toPath(), second.toPath());
+    }
+
+    public static class DirectoryNotexistsException extends RuntimeException {}
 }

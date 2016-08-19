@@ -20,7 +20,6 @@ public class SearchPersistence {
         try (ObjectInput oin = new ObjectInputStream(new FileInputStream(SERIALIZED_NAME))) {
             result = (List<Pair<File>>) oin.readObject();
         } catch (IOException e) {
-            System.out.println("File not found.");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -35,6 +34,9 @@ public class SearchPersistence {
     public void saveSelection(Pair<File> directoriesToCompare) {
         if (!directoriesToCompare.isNull()) {
             List<Pair<File>> list = loadpreviousSelections();
+            if (list.contains(directoriesToCompare)) {
+                list.remove(directoriesToCompare);
+            }
             list.add(directoriesToCompare);
             try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(SERIALIZED_NAME))) {
                 out.writeObject(list);
