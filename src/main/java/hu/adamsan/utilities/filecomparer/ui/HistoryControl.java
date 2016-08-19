@@ -8,7 +8,10 @@ import hu.adamsan.utilities.filecomparer.SearchPersistence;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
@@ -48,8 +51,18 @@ public class HistoryControl extends AnchorPane {
 
     @FXML
     public void delete(ActionEvent e) {
-        searchPersistence.delete(selection);
-        differenceUIApplication.loadHistory();
+        if (confirmDelete()) {
+            searchPersistence.delete(selection);
+            differenceUIApplication.loadHistory();
+        }
+    }
+
+    private boolean confirmDelete() {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Confirm");
+        alert.setContentText("Are you sure?");
+        alert.showAndWait();
+        return alert.getResult() == ButtonType.OK;
     }
 
     public void setDifferenceUIApplication(DifferenceUIApplication differenceUIApplication) {
