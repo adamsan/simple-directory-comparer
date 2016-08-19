@@ -7,27 +7,37 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchPersistence {
 
     private static final String SERIALIZED_NAME = "lastComparison.ser";
 
-    public Pair<File> loadPreviousSelection() {
-        Pair<File> pair = new Pair<>();
+    public List<Pair<File>> loadpreviousSelections() {
+        List<Pair<File>> result = new ArrayList<>();
+
         try (ObjectInput oin = new ObjectInputStream(new FileInputStream(SERIALIZED_NAME))) {
-            pair = (Pair<File>) oin.readObject();
+            result = (List<Pair<File>>) oin.readObject();
         } catch (IOException e) {
             System.out.println("File not found.");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return pair;
+        return result;
+    }
+
+    public Pair<File> loadPreviousSelection() {
+        List<Pair<File>> list = loadpreviousSelections();
+        return list.size() > 0 ? list.get(list.size() - 1) : new Pair<>();
     }
 
     public void saveSelection(Pair<File> directoriesToCompare) {
         if (!directoriesToCompare.isNull()) {
+            List<Pair<File>> list = loadpreviousSelections();
+            list.add(directoriesToCompare);
             try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(SERIALIZED_NAME))) {
-                out.writeObject(directoriesToCompare);
+                out.writeObject(list);
             } catch (IOException e) {
                 e.printStackTrace();
             }

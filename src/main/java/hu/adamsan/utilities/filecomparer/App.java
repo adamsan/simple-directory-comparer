@@ -49,20 +49,18 @@ public class App {
         chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         if (previousFile != null) {
             chooser.setSelectedFile(previousFile);
-            removePreviousSelectionIfCancelPressed(chooser);
         }
-        chooser.showOpenDialog(null);
-        File selectedFile = chooser.getSelectedFile();
+        return returnSelectedIfCancelWasNotPressed(chooser);
+    }
+
+    private File returnSelectedIfCancelWasNotPressed(JFileChooser chooser) {
+        File selectedFile = null;
+        if (chooser.showOpenDialog(null) != JFileChooser.CANCEL_OPTION) {
+            selectedFile = chooser.getSelectedFile();
+        }
         return selectedFile;
     }
 
-    private void removePreviousSelectionIfCancelPressed(JFileChooser chooser) {
-        chooser.addActionListener((ActionEvent e) -> {
-            if (isCancelPressed(e)) {
-                chooser.setSelectedFile(null);
-            }
-        });
-    }
 
     private boolean isCancelPressed(ActionEvent e) {
         return e.getActionCommand().equals(JFileChooser.CANCEL_SELECTION);
