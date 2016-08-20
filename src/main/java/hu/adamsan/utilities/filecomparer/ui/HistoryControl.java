@@ -30,7 +30,7 @@ public class HistoryControl extends AnchorPane {
 
     public HistoryControl(Pair<File> selection) {
         super();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("HistoryRow.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/HistoryRow.fxml"));
         loader.setRoot(this);
         loader.setController(this);
         try {

@@ -16,6 +16,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -87,7 +88,10 @@ public class DifferenceUIApplication extends Application {
     }
 
     private void initializeWindow() throws IOException {
-        String rootFxmlFileName = "Difference.fxml";
+
+        primaryStage.getIcons().add(new Image(this.getClass().getResourceAsStream("/active-file-compare.gif")));
+
+        String rootFxmlFileName = "/Difference.fxml";
         fxmlLoader = createLoaderFor(rootFxmlFileName);
         root = fxmlLoader.load();
         differenceController = fxmlLoader.getController();
@@ -95,7 +99,7 @@ public class DifferenceUIApplication extends Application {
         double height = java.awt.Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 3 * 2;
         scene = new Scene(root, 900, height);
         primaryStage.setTitle("Difference Viewer");
-        scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/application.css").toExternalForm());
 
         loadHistory();
         differenceController.historyPane.setExpanded(false);
