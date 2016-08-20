@@ -24,9 +24,6 @@ import javafx.stage.Stage;
 public class DifferenceUIApplication extends Application {
     private BorderPane root;
 
-    // @FXML //does not work...
-    VBox differencesVBox;
-
     private Scene scene;
 
     private DifferenceController differenceController;
