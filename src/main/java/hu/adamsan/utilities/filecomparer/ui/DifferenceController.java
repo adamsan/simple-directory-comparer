@@ -95,19 +95,19 @@ public class DifferenceController {
         ObservableList<MyCellData> selectedItems = differenceTable.getSelectionModel().getSelectedItems();
         if (selectedItems.size() > 1) {
             selectedItems.forEach(System.out::println);
-            copy((List<String>) selectedItems.stream().map(myCellData -> myCellData.getName().get()).collect(Collectors.toList()));
+            copyManyFilesWithConfirmation((List<String>) selectedItems.stream().map(myCellData -> myCellData.getName().get()).collect(Collectors.toList()));
             mainUI.compare(currentPair);
         } else {
             MyCellData selected = differenceTable.getSelectionModel().getSelectedItem();
             if (selected != null) {
                 String selectedFileString = selected.getName().get();
-                copy(selectedFileString);
+                copyOneFileWithConfirmation(selectedFileString);
                 mainUI.compare(currentPair);
             }
         }
     }
 
-    private void copy(List<String> selectedFileStringList) {
+    private void copyManyFilesWithConfirmation(List<String> selectedFileStringList) {
         if (confirmCopy(selectedFileStringList.size())) {
             for (String fileName : selectedFileStringList) {
                 File source = new File(currentPair.first, fileName);
@@ -117,7 +117,7 @@ public class DifferenceController {
         }
 
     }
-    private void copy(String selectedFileString) {
+    private void copyOneFileWithConfirmation(String selectedFileString) {
         File source = new File(currentPair.first, selectedFileString);
         File dest = new File(currentPair.second, selectedFileString);
         if (confirmCopy(source, dest)) {
