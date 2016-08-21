@@ -4,10 +4,10 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.TitledPane?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.adamsan.utilities.filecomparer.ui.DifferenceController">
 
@@ -16,7 +16,7 @@
 			<buttons>
 				<Button fx:id="changeFirstBtn" mnemonicParsing="true" onAction="#changeFirstClick" text="Change _First" ButtonBar.buttonData="LEFT" />
 				<Button fx:id="changeSecondBtn" mnemonicParsing="true" onAction="#changeSecondClick" text="Change _Second" ButtonBar.buttonData="LEFT" />
-				<Button mnemonicParsing="false" text="Copy selected" ButtonBar.buttonData="LEFT" onAction="#copySelected" />
+				<Button mnemonicParsing="false" onAction="#copySelected" text="Copy selected" ButtonBar.buttonData="LEFT" />
 			</buttons>
 		</ButtonBar>
 	</top>
@@ -24,24 +24,24 @@
 		<HBox>
 			<TableView fx:id="firstTable" prefHeight="368.0" prefWidth="458.0" BorderPane.alignment="CENTER">
 				<columns>
-					<TableColumn fx:id="firstColumn" prefWidth="150.0" text="First" />
+					<TableColumn fx:id="firstColumn" prefWidth="300.0" text="First" />
 				</columns>
 			</TableView>
 			<TableView fx:id="secondTable" prefHeight="368.0" prefWidth="458.0" BorderPane.alignment="CENTER">
 				<columns>
-					<TableColumn fx:id="secondColumn" prefWidth="150.0" text="Second" />
+					<TableColumn fx:id="secondColumn" prefWidth="300.0" text="Second" />
 				</columns>
 			</TableView>
 			<TableView fx:id="differenceTable" prefHeight="368.0" prefWidth="458.0" BorderPane.alignment="CENTER">
 				<columns>
-					<TableColumn fx:id="differenceColumn" prefWidth="150.0" text="Missing from Second" />
+					<TableColumn fx:id="differenceColumn" prefWidth="300.0" text="Missing from Second" />
 				</columns>
 			</TableView>
 		</HBox>
 	</center>
 	<bottom>
-		<TitledPane text="History" fx:id="historyPane">
-			<VBox fx:id="historyVBox" maxWidth="370.0" prefWidth="370.0" minWidth="370.0" />
+		<TitledPane fx:id="historyPane" text="History">
+			<VBox fx:id="historyVBox" maxWidth="370.0" minWidth="370.0" prefWidth="370.0" />
 		</TitledPane>
 	</bottom>
 </BorderPane>
