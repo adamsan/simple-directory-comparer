@@ -50,6 +50,16 @@ public class DifferenceController {
     TitledPane historyPane;
 
     @FXML
+    public void switchPair() {
+        if (!currentPair.isNull()) {
+            File first = currentPair.first;
+            currentPair.first = currentPair.second;
+            currentPair.second = first;
+        }
+        mainUI.compare(currentPair);
+    }
+    
+    @FXML
     public void changeFirstClick(ActionEvent event) {
         File defaultDir = mainUI.getPreviousSelection().first;
         File file = selectDir(defaultDir, "Select First Folder");
