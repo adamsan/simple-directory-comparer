@@ -2,10 +2,13 @@ package hu.adamsan.utilities.filecomparer.ui;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
 
 import hu.adamsan.utilities.filecomparer.Pair;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -58,7 +61,7 @@ public class DifferenceController {
         }
         mainUI.compare(currentPair);
     }
-    
+
     @FXML
     public void changeFirstClick(ActionEvent event) {
         File defaultDir = mainUI.getPreviousSelection().first;
@@ -89,33 +92,59 @@ public class DifferenceController {
 
     @FXML
     public void copySelected(ActionEvent event) {
-        MyCellData selected = differenceTable.getSelectionModel().getSelectedItem();
-        if (selected != null) {
-            String selectedFileString = selected.getName().get();
-            copy(selectedFileString);
+        ObservableList<MyCellData> selectedItems = differenceTable.getSelectionModel().getSelectedItems();
+        if (selectedItems.size() > 1) {
+            selectedItems.forEach(System.out::println);
+            copy((List<String>) selectedItems.stream().map(myCellData -> myCellData.getName().get()).collect(Collectors.toList()));
             mainUI.compare(currentPair);
-        }
-
-    }
-
-    private void copy(String selectedFileString) {
-        File source = new File(currentPair.first, selectedFileString);
-        File dest = new File(currentPair.second, selectedFileString);
-
-        if (confirmCopy(source, dest)) {
-
-            try {
-                if (source.isDirectory()) {
-                    FileUtils.copyDirectory(source, dest);
-                } else {
-                    FileUtils.copyFile(source, dest);
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+        } else {
+            MyCellData selected = differenceTable.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                String selectedFileString = selected.getName().get();
+                copy(selectedFileString);
+                mainUI.compare(currentPair);
             }
         }
     }
 
+    private void copy(List<String> selectedFileStringList) {
+        if (confirmCopy(selectedFileStringList.size())) {
+            for (String fileName : selectedFileStringList) {
+                File source = new File(currentPair.first, fileName);
+                File dest = new File(currentPair.second, fileName);
+                copyFile(source, dest);
+            }
+        }
+
+    }
+    private void copy(String selectedFileString) {
+        File source = new File(currentPair.first, selectedFileString);
+        File dest = new File(currentPair.second, selectedFileString);
+        if (confirmCopy(source, dest)) {
+            copyFile(source, dest);
+        }
+    }
+
+    private void copyFile(File source, File dest) {
+        try {
+            if (source.isDirectory()) {
+                FileUtils.copyDirectory(source, dest);
+            } else {
+                FileUtils.copyFile(source, dest);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean confirmCopy(int numberOfFiles) {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Confirm copy");
+        alert.setContentText("Are you sure, you want to copy " + numberOfFiles + " files?");
+        alert.showAndWait();
+        ButtonType result = alert.getResult();
+        return result == ButtonType.OK;
+    }
     private boolean confirmCopy(File source, File dest) {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Confirm copy");

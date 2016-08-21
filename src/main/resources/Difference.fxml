@@ -8,6 +8,9 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.SelectionModel?>
+
+<?language javascript?>
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.adamsan.utilities.filecomparer.ui.DifferenceController">
 
@@ -17,7 +20,7 @@
 				<Button fx:id="changeFirstBtn" mnemonicParsing="true" onAction="#changeFirstClick" text="Change _First" ButtonBar.buttonData="LEFT" />
 				<Button fx:id="changeSecondBtn" mnemonicParsing="true" onAction="#changeSecondClick" text="Change _Second" ButtonBar.buttonData="LEFT" />
 				<Button mnemonicParsing="false" onAction="#copySelected" text="Copy selected" ButtonBar.buttonData="RIGHT" />
-            	<Button mnemonicParsing="false" onAction="#switchPair" text="Switch" ButtonBar.buttonData="RIGHT" />
+				<Button mnemonicParsing="false" onAction="#switchPair" text="Switch" ButtonBar.buttonData="RIGHT" />
 			</buttons>
 		</ButtonBar>
 	</top>
@@ -38,6 +41,9 @@
 					<TableColumn fx:id="differenceColumn" prefWidth="300.0" text="Missing from Second" />
 				</columns>
 			</TableView>
+			<fx:script>
+				differenceTable.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.MULTIPLE);
+			</fx:script>
 		</HBox>
 	</center>
 	<bottom>
